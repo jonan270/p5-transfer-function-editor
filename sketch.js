@@ -2,11 +2,11 @@ const width = 1000;
 const height = 300;
 const border = 20;
 const circleRad = 40;
-let color1, color2, color3, color4;
 
 function setup() {
   createCanvas(width + border, 600);
 
+  // Color picker for each node
   colorPicker = createColorPicker('red');
   colorPicker.position(border, height + 5);
 
@@ -19,12 +19,14 @@ function setup() {
   colorPicker4 = createColorPicker('red');
   colorPicker4.position(border, height + 65);
 
+  // Press to generate transfer function gradient
   tf_button = createButton("Generate");
   tf_button.position(border, height + 100);
 }
 
 function draw() {
 
+  // Colors of each node
   color1 = colorPicker.color();
   color2 = colorPicker2.color();
   color3 = colorPicker3.color();
@@ -33,9 +35,8 @@ function draw() {
   strokeWeight(1);
   tf_button.mousePressed(function () { setGradient(width/6, height + 5, 3*width/6, 65, color1, color2, color3, color4) });
 
-  //Draw diagram axes
+  // Draw diagram axes
   strokeWeight(5);
-
   stroke(0); // axes color is black
   triangle(border + 5, border + 10, border, border, border, border + 10);
   triangle(width - 10, height - 5, width, height, width - 10, height);
@@ -43,6 +44,7 @@ function draw() {
   line(border, height, border, border);
   line(border, height, width, height);
 
+  // Draw nodes
   strokeWeight(0);
   fill(color1);
   ellipse(width / 6, height / 2, circleRad, circleRad);
@@ -54,8 +56,19 @@ function draw() {
   ellipse(4 * width / 6, height / 2, circleRad, circleRad);
 }
 
-// This function is a bit dumb as it draws a lot of lines.
-// Had trouble finding a better solution for linear interpolation in p5.
+
+/*
+
+Had trouble finding a better solution for linear interpolation in p5.
+This function draws a lot of lines to make a gradient.
+
+x: x-cord starting point of gradient
+y: y-cord starting point of gradient
+w: width of gradient
+h: height of gradient
+c1, c2... : Colors to be interpolated
+
+*/
 function setGradient(x, y, w, h, c1, c2, c3, c4) {
   strokeWeight(1);
   print("Generating gradient..")
